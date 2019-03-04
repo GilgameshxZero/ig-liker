@@ -1,3 +1,4 @@
+@echo off
 :loop
 call activate webdev
 python main.py
