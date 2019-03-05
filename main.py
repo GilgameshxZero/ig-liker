@@ -6,6 +6,8 @@ import configparser
 import zipfile
 import io
 
+print("Running ig-liker...")
+
 # download chromedriver
 try:
     request = requests.get(
@@ -29,6 +31,7 @@ chrome_options.add_argument("--log-level=3")
 chrome_options.add_argument("--silent")
 chrome_options.add_argument("--disable-gpu")
 chrome_options.add_argument("--allow-insecure-localhost")
+chrome_options.add_argument("--disable-extensions")
 if config["headless"] == "true":
     chrome_options.add_argument("--headless")
 driver = selenium.webdriver.Chrome(
@@ -44,7 +47,6 @@ driver.find_element_by_name("password").send_keys(config["password"])
 time.sleep(3)
 # TODO: this sometimes fails...
 driver.find_element_by_xpath("//button[contains(.//div, \"Log in\")]").click()
-print("logged in")
 
 # scoll pages and heart posts until many current pages contain no more hearts
 curheight = 0
@@ -74,7 +76,6 @@ while nohearts <= 5:
             hearts[a].click()
             time.sleep(1)
             totalhearts += 1
-            print(str(totalhearts) + " hearts")
             clicked = True
 
     if clicked:
