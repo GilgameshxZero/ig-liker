@@ -52,7 +52,7 @@ totalhearts = 0
 nohearts = 0
 windowHeight = driver.execute_script(
     "return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight")
-while nohearts <= 20:
+while nohearts <= 5:
     driver.execute_script("window.scrollTo(0, arguments[0]);", curheight)
     curheight += windowHeight
     time.sleep(3)
@@ -81,7 +81,6 @@ while nohearts <= 20:
         nohearts = 0
     else:
         nohearts += 1
-        print("no hearts in this scroll")
 
 # clean up
 driver.get("https://www.instagram.com/")  # to give window time to close

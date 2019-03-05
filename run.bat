@@ -3,5 +3,5 @@
 call activate webdev
 python main.py
 call deactivate
-timeout 3600
+waitfor /T 3600 pause
 goto loop
