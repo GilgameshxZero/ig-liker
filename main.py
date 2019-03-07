@@ -46,7 +46,7 @@ driver.find_element_by_name("username").send_keys(config["username"])
 driver.find_element_by_name("password").send_keys(config["password"])
 time.sleep(3)
 # TODO: this sometimes fails...
-driver.find_element_by_xpath("//button[contains(.//div, \"Log in\")]").click()
+driver.find_element_by_xpath("//button[@type=\"submit\"]").click()
 
 # scoll pages and heart posts until many current pages contain no more hearts
 curheight = 0
