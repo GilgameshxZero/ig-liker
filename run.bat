@@ -1,8 +1,8 @@
 @echo off
 :loop
 git pull
-call activate webdev
+call conda activate webdev
 python main.py
-call deactivate
+call conda deactivate
 waitfor /T 3600 pause 2>nul
 goto loop

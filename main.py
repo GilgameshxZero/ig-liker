@@ -49,39 +49,22 @@ time.sleep(3)
 driver.find_element_by_xpath("//button[@type=\"submit\"]").click()
 
 # scoll pages and heart posts until many current pages contain no more hearts
-curheight = 0
-totalhearts = 0
-nohearts = 0
 windowHeight = driver.execute_script(
     "return window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight")
-while nohearts <= 5:
-    driver.execute_script("window.scrollTo(0, arguments[0]);", curheight)
-    curheight += windowHeight
-    time.sleep(3)
-    hearts = driver.find_elements_by_class_name("coreSpriteHeartOpen")
-    clicked = False
+while True:
+    likes = driver.find_elements_by_css_selector(
+        "span[aria-label=\"Like\"]")
+    if len(likes) == 0:
+        break
 
-    for a in range(len(hearts)):
-        if hearts[a].is_displayed():
-            # only if the child element has aria-label "Like"
-            unlikeChilds = hearts[a].find_elements_by_css_selector(
-                "span[aria-label=\"Unlike\"]")
-            if len(unlikeChilds) > 0:
-                continue
-
+    for a in range(len(likes)):
+        # not a comment
+        if not "glyphsSpriteComment_like" in likes[a].get_attribute("class").split(" "):
             # scroll element into the middle of page
             driver.execute_script("window.scrollBy(0, arguments[0]);", driver.execute_script(
-                "return arguments[0].getBoundingClientRect().top;", hearts[a]) - windowHeight / 2)
-
-            hearts[a].click()
+                "return arguments[0].getBoundingClientRect().top;", likes[a]) - windowHeight / 2)
+            likes[a].click()
             time.sleep(1)
-            totalhearts += 1
-            clicked = True
-
-    if clicked:
-        nohearts = 0
-    else:
-        nohearts += 1
 
 # clean up
 driver.get("https://www.instagram.com/")  # to give window time to close
