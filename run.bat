@@ -1,7 +1,6 @@
 @echo off
-call conda activate webdev
+call activate webdev
 :loop
 python main.py
-waitfor /T 3600 pause 2>nul
+timeout /t 3600 /nobreak
 goto loop
-call conda deactivate
