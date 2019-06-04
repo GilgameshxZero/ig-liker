@@ -4,3 +4,4 @@ call activate webdev
 python main.py
 timeout /t 3600 /nobreak
 goto loop
+call conda deactivate

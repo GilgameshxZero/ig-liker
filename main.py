@@ -1,11 +1,11 @@
+import time
+import configparser
+import io
+import traceback
+import zipfile
 import selenium
 from selenium import webdriver
 import requests
-import time
-import configparser
-import zipfile
-import io
-import traceback
 
 # parse configuration
 config = configparser.ConfigParser()
