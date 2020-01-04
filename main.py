@@ -54,7 +54,10 @@ def run():
               chromedriver_file + ".")
 
     # setup driver
+    USER_DATA_DIR = ".cache/chrome-user-data/"
     chrome_options = selenium.webdriver.chrome.options.Options()
+    chrome_options.add_argument("--user-data-dir=" + USER_DATA_DIR)
+    chrome_options.add_argument("--no-sandbox")
     chrome_options.add_argument("--disable-notifications")
     chrome_options.add_argument("--mute-audio")
     chrome_options.add_argument("--log-level=3")
@@ -83,7 +86,7 @@ def run():
             time.sleep(5)
         except:
             # if profile is being used, then we won't need to login
-            print("Failed to login; is user already logged in?")
+            print("Did not log in. Perhaps user is already logged in?")
 
         article = driver.find_element_by_css_selector("article")
         windowHeight = driver.execute_script(

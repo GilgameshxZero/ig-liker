@@ -1,3 +1,3 @@
 # ig-liker
 
-:thinking:
+Likes your Instagram feed for you!
