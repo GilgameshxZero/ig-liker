@@ -37,3 +37,9 @@ The following flags should not be given a value:
 Flag|Usage
 -|-
 `--headless`|If set, the chromedriver will be run in headless mode. This may cause additional errors, but will not launch a GUI.
+
+For example, the following command will run the auto-liker every single day, after prompting for username and password exactly once:
+
+```bash
+python main.py --period=86400
+```
