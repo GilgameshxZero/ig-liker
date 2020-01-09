@@ -9,9 +9,9 @@ import time
 from selenium import webdriver
 import selenium
 import pathlib
-
-# use the correct chromedriver for your chrome version!
-CHROMEDRIVER_URL = "https://chromedriver.storage.googleapis.com/79.0.3945.36/chromedriver_win32.zip"
+import platform
+import os
+import stat
 
 
 def main(argv):
@@ -21,6 +21,15 @@ def main(argv):
 
     argv: List of command line arguments (sys.argv[1:])
     """
+    # use the correct chromedriver for your chrome version!
+    CHROMEDRIVER_URL_BASE = "https://chromedriver.storage.googleapis.com/79.0.3945.36"
+    CHROMEDRIVER_URL_EXTENSION = {
+        "Linux": "/chromedriver_linux64.zip",
+        "Darwin": "/chromedriver_mac64.zip",
+        "Windows": "/chromedriver_win32.zip"
+    }
+    CHROMEDRIVER_URL = CHROMEDRIVER_URL_BASE + CHROMEDRIVER_URL_EXTENSION[platform.system()]
+
     # parse command line arguments
     try:
         opts, args = getopt.getopt(
@@ -47,6 +56,10 @@ def main(argv):
         file = archive.namelist()[0]
         chromedriver_file = archive.extract(file, CACHE_DIR)
         archive.close()
+
+        # mark executable
+        os.chmod(chromedriver_file, os.stat(chromedriver_file).st_mode | 0o111)
+
         print("Downloaded and extracted chromedriver to", chromedriver_file + ".")
     except:
         traceback.print_exc()
@@ -63,7 +76,7 @@ def main(argv):
 
     # run the script forever! unless period is not set, which we check at the end
     while True:
-        print("Beginning auto-liker")
+        print("Starting auto-liker...")
 
         # setup driver
         try:
