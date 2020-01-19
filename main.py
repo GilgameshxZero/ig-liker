@@ -141,7 +141,7 @@ def main(argv):
                     "return (arguments[0].getBoundingClientRect().top + arguments[0].getBoundingClientRect().bottom) / 2;", article) - windowHeight / 2)
                 time.sleep(3)
                 likes = article.find_elements_by_css_selector(
-                    "span[aria-label=\"Like\"]")
+                    "svg[aria-label=\"Like\"]")
 
                 if len(likes) == 0 or "glyphsSpriteComment_like" in likes[0].get_attribute("class").split(" "):
                     consecutive_skipped += 1
