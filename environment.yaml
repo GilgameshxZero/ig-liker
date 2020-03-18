@@ -2,8 +2,8 @@ name: ig-liker
 channels:
   - defaults
 dependencies:
-  - python
   - requests
   - selenium
-prefix: /Users/Gilgamesh/miniconda3/envs/ig-liker
+  - python
+prefix: C:\Users\yanga\miniconda3\envs\ig-liker
 

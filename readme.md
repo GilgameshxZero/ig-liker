@@ -1,6 +1,6 @@
 # ig-liker
 
-Automatically likes your Instagram feed!
+Automatically likes posts on your Instagram feed!
 
 ## Setup
 
@@ -43,3 +43,10 @@ For example, the following command will run the auto-liker every single day, aft
 ```bash
 python main.py --period=86400
 ```
+
+## Changelog
+
+### 1.0.0
+
+* Login works again.
+* Does not like comments anymore.

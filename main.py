@@ -21,14 +21,20 @@ def main(argv):
 
     argv: List of command line arguments (sys.argv[1:])
     """
-    # use the correct chromedriver for your chrome version!
-    CHROMEDRIVER_URL_BASE = "https://chromedriver.storage.googleapis.com/79.0.3945.36"
+    # retrieve the lastest chromedriver version.
+    # replace if this doesn't match the system's Chrome installation
+    CHROMEDRIVER_URL_VERSION = requests.get(
+        "https://chromedriver.storage.googleapis.com/LATEST_RELEASE").text
+    CHROMEDRIVER_URL_BASE = "https://chromedriver.storage.googleapis.com/" + \
+        CHROMEDRIVER_URL_VERSION
     CHROMEDRIVER_URL_EXTENSION = {
         "Linux": "/chromedriver_linux64.zip",
         "Darwin": "/chromedriver_mac64.zip",
         "Windows": "/chromedriver_win32.zip"
     }
-    CHROMEDRIVER_URL = CHROMEDRIVER_URL_BASE + CHROMEDRIVER_URL_EXTENSION[platform.system()]
+    CHROMEDRIVER_URL = CHROMEDRIVER_URL_BASE + \
+        CHROMEDRIVER_URL_EXTENSION[platform.system()]
+    print("Using chromedriver at \"" + CHROMEDRIVER_URL + "\".")
 
     # parse command line arguments
     try:
@@ -84,7 +90,7 @@ def main(argv):
             chrome_options = selenium.webdriver.chrome.options.Options()
             chrome_options.add_argument("--user-data-dir=" + USER_DATA_DIR)
             chrome_options.add_argument("--no-sandbox")
-            chrome_options.add_argument("--window-size=1920,1080")
+            chrome_options.add_argument("--window-size=800,600")
             chrome_options.add_argument("--disable-notifications")
             chrome_options.add_argument("--mute-audio")
             chrome_options.add_argument("--log-level=3")
@@ -95,7 +101,7 @@ def main(argv):
             if "--headless" in opts.keys():
                 chrome_options.add_argument("--headless")
 
-                # fix! must be set to some unused port
+                # TODO: must be set to some unused port
                 chrome_options.add_argument("--remote-debugging-port=9222")
             driver = selenium.webdriver.Chrome(
                 chromedriver_file, options=chrome_options)
@@ -117,15 +123,13 @@ def main(argv):
 
             # login
             try:
-                driver.find_element_by_link_text("Log in").click()
-                time.sleep(5)
                 driver.save_screenshot(SCREENSHOT_DIR + "login.png")
                 driver.find_element_by_name("username").send_keys(username)
                 driver.find_element_by_name("password").send_keys(password)
                 time.sleep(3)
                 driver.find_element_by_xpath(
                     "//button[@type=\"submit\"]").click()
-                time.sleep(5)
+                time.sleep(10)
                 print("Logged in.")
             except:
                 # if profile is being used, then we won't need to login
@@ -141,7 +145,7 @@ def main(argv):
                     "return (arguments[0].getBoundingClientRect().top + arguments[0].getBoundingClientRect().bottom) / 2;", article) - windowHeight / 2)
                 time.sleep(3)
                 likes = article.find_elements_by_css_selector(
-                    "svg[aria-label=\"Like\"]")
+                    "svg[aria-label=\"Like\"][width=\"24\"]")
 
                 if len(likes) == 0 or "glyphsSpriteComment_like" in likes[0].get_attribute("class").split(" "):
                     consecutive_skipped += 1
