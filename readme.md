@@ -23,6 +23,20 @@ Run the script with:
 python main.py
 ```
 
+### Headless Ubuntu
+
+Chromedriver can be run headless on Ubuntu after installing Chrome and several dependencies:
+
+```bash
+sudo apt-get install libxss1 libappindicator1 libindicator7;
+sudo apt --fix-broken install;
+wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb;
+sudo dpkg -i google-chrome*.deb;
+rm google-chrome*.deb;
+sudo apt-get install -f;
+sudo apt-get install xvfb;
+```
+
 ## Command-line options
 
 Option|Usage
@@ -45,6 +59,10 @@ python main.py --period=86400
 ```
 
 ## Changelog
+
+### 1.0.1
+
+* Added instructions for headless Ubuntu.
 
 ### 1.0.0
 
