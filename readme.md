@@ -7,7 +7,7 @@ Automatically likes posts on your Instagram feed!
 Setup the Python environment with:
 
 ```bash
-pip install requirements.txt
+pip install -r requirements.txt
 ```
 
 or, if using Conda, with:
@@ -59,6 +59,10 @@ python main.py --period=86400
 ```
 
 ## Changelog
+
+### 1.0.2
+
+* Fixed typo in `readme`.
 
 ### 1.0.1
 
